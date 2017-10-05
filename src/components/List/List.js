@@ -28,19 +28,17 @@ class List extends Component {
 
   render() {
     return (
-      <ul>
-        {
-          this.state.items.map((item, index) => (
-            <Item 
-              key={index} 
-              title={item.title} 
-              completed={item.completed} 
-              toggleComplete={() => {
-              this.toggleComplete(index);
-            }} />
-          ))
-        }
-      </ul>
+        <ul>
+          { this.state.items.map((item, index) => (
+              <Item 
+                key={index} 
+                title={item.title} 
+                completed={item.completed} 
+                toggleComplete={() => {
+                this.toggleComplete(index);
+              }} />
+            ))}
+        </ul> 
     )
   }
 }
