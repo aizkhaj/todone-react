@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Item from '../Item/Item';
+import {Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup} from 'react-bootstrap';
+import '../List/List.css'
 
 class List extends Component {
   constructor(props) {
@@ -42,22 +44,30 @@ class List extends Component {
 
   render() {
     return (
-      <div>
-        <ul>
-          { this.state.items.map((item, index) => (
-              <Item 
-                key={index} 
-                title={item.title} 
-                completed={item.completed} 
-                toggleComplete={() => {
-                this.toggleComplete(index);
-              }} />
-            ))}
-        </ul>
-        <form onSubmit={(e) => this.handleSubmit(e)}>
-            <input type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} />
-            <input type="submit" />
-        </form>
+      <div className="list">
+        <Panel collapsible defaultExpanded header="List Name Here">
+          <ListGroup fill>
+            { this.state.items.map((item, index) => (
+                <Item 
+                  key={index} 
+                  title={item.title} 
+                  completed={item.completed} 
+                  toggleComplete={() => {
+                  this.toggleComplete(index);
+                }} />
+              ))}
+            <Form inline onSubmit={(e) => this.handleSubmit(e)}>
+              <FormGroup controlId="newItem">
+                <InputGroup>
+                  <FormControl type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
+                  <InputGroup.Button>
+                    <Button type="submit">Submit</Button>    
+                  </InputGroup.Button>
+                </InputGroup>
+              </FormGroup>
+            </Form>
+          </ListGroup>
+        </Panel>
       </div> 
     )
   }
