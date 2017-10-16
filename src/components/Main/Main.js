@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom';
 import {Grid, Col} from 'react-bootstrap';
 import List from '../List/List';
 import HomePage from '../HomePage/HomePage';
+import NewList from '../NewList/NewList';
 
 class Main extends Component {
   render() {
@@ -16,6 +17,7 @@ class Main extends Component {
           <Col md={2}/>
           <Col md={8}>
             <List />
+            <NewList />
           </Col>
           <Col md={2}/>
         </Grid>  

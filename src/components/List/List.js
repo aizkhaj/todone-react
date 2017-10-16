@@ -56,17 +56,17 @@ class List extends Component {
                   this.toggleComplete(index);
                 }} />
               ))}
-            <Form inline onSubmit={(e) => this.handleSubmit(e)}>
+          </ListGroup>
+            <Form onSubmit={(e) => this.handleSubmit(e)}>
               <FormGroup controlId="newItem">
                 <InputGroup>
-                  <FormControl type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
+                  <FormControl className="newItem" type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
                   <InputGroup.Button>
                     <Button type="submit">Submit</Button>    
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
             </Form>
-          </ListGroup>
         </Panel>
       </div> 
     )
