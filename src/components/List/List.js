@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Route} from 'react-router-dom';
 import Item from '../Item/Item';
 import {Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup} from 'react-bootstrap';
 import '../List/List.css'
@@ -45,6 +46,7 @@ class List extends Component {
   render() {
     return (
       <div className="list">
+        <Route exact path="/lists" />
         <Panel collapsible defaultExpanded header="List Name Here">
           <ListGroup fill>
             { this.state.items.map((item, index) => (
