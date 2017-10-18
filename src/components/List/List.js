@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import {Route} from 'react-router-dom';
+import {Route, Link} from 'react-router-dom';
 import Item from '../Item/Item';
-import {Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup} from 'react-bootstrap';
-import '../List/List.css'
+import {Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup, Col} from 'react-bootstrap';
+import '../List/List.css';
+import NewList from '../NewList/NewList';
 
 class List extends Component {
   constructor(props) {
@@ -46,18 +47,20 @@ class List extends Component {
   render() {
     return (
       <div className="list">
-        <Route exact path="/lists" />
+        <Col md={2}/>
+        <Col md={8}>
+        <Link id="task-history" to="/task-history">Task History</Link>
         <Panel collapsible defaultExpanded header="List Name Here">
           <ListGroup fill>
             { this.state.items.map((item, index) => (
-                <Item 
+              <Item 
                   key={index} 
                   title={item.title} 
                   completed={item.completed} 
                   toggleComplete={() => {
-                  this.toggleComplete(index);
-                }} />
-              ))}
+                    this.toggleComplete(index);
+                  }} />
+                ))}
           </ListGroup>
             <Form onSubmit={(e) => this.handleSubmit(e)}>
               <FormGroup controlId="newItem">
@@ -70,6 +73,10 @@ class List extends Component {
               </FormGroup>
             </Form>
         </Panel>
+        <NewList/>
+        </Col>
+        <Col md={2}/>
+        <Route exact path="/lists" />
       </div> 
     )
   }
