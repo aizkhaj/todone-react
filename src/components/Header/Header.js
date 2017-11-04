@@ -19,11 +19,11 @@ class Header extends Component {
               <NavLink className="" to="/lists">My Lists</NavLink>
             </NavItem>
           </Nav>
-          {/* <Nav>
-            <NavItem eventKey={1} href="#">Link</NavItem>
-            <NavItem eventKey={2} href="#">Link</NavItem>
-          </Nav> */}
+          
           <Nav pullRight>
+            <NavItem>
+              {this.props.username}
+            </NavItem>  
             <NavItem>
               <NavLink className="login-text" to="/signin">
                 <Button bsStyle="primary" bsSize="xs">

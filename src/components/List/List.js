@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import {Route, Link} from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
 import Item from '../Item/Item';
-import {Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup, Col} from 'react-bootstrap';
+import { Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup, Col } from 'react-bootstrap';
 import '../List/List.css';
 import NewList from '../NewList/NewList';
 
@@ -37,7 +37,7 @@ class List extends Component {
       return
     }
     const newItem = { title: this.state.newItemTitle, completed: false };
-    this.setState({ items: [...this.state.items, newItem], newItemTitle: '' }); 
+    this.setState({ items: [...this.state.items, newItem], newItemTitle: '' });
   }
 
   handleChange(e) {
@@ -47,37 +47,37 @@ class List extends Component {
   render() {
     return (
       <div className="list">
-        <Col md={2}/>
+        <Col md={2} />
         <Col md={8}>
-        <Link id="task-history" to="/task-history">Task History</Link>
-        <Panel collapsible defaultExpanded header="List Name Here">
-          <ListGroup fill>
-            { this.state.items.map((item, index) => (
-              <Item 
-                  key={index} 
-                  title={item.title} 
-                  completed={item.completed} 
+          <Link id="task-history" to="/task-history">Task History</Link>
+          <Panel collapsible defaultExpanded header="List Name Here">
+            <ListGroup fill>
+              {this.state.items.map((item, index) => (
+                <Item
+                  key={index}
+                  title={item.title}
+                  completed={item.completed}
                   toggleComplete={() => {
                     this.toggleComplete(index);
                   }} />
-                ))}
-          </ListGroup>
+              ))}
+            </ListGroup>
             <Form onSubmit={(e) => this.handleSubmit(e)}>
               <FormGroup controlId="newItem">
                 <InputGroup>
                   <FormControl className="newItem" type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
                   <InputGroup.Button>
-                    <Button type="submit">Submit</Button>    
+                    <Button type="submit">Submit</Button>
                   </InputGroup.Button>
                 </InputGroup>
               </FormGroup>
             </Form>
-        </Panel>
-        <NewList/>
+          </Panel>
+          <NewList />
         </Col>
-        <Col md={2}/>
+        <Col md={2} />
         <Route exact path="/lists" />
-      </div> 
+      </div>
     )
   }
 }
