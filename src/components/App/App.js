@@ -12,12 +12,13 @@ class App extends Component {
     super(props);
     this.state = {
       username: '',
-      token: '',
+      token: localStorage.getItem('token') || '',
       lists: []
     }
   }
 
   login(username, password) {
+    console.log(username, password);
     fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
       method: 'POST',
       headers: {
@@ -31,9 +32,9 @@ class App extends Component {
     .then(response => response.json())
     .then((response) => {
       console.log('response', response);
-      this.setState({username, token: response.body.token});
-      this.setToken(response.body.token);
-      this.props.history('/lists');
+      this.setState({username});
+      this.setToken(response.token);
+      this.props.history.push('/lists');
     })
     .catch((err) => {console.log('Failed!', err)});
   }
@@ -49,10 +50,13 @@ class App extends Component {
 
   setToken(token) {
     localStorage.setItem('token', token);
+    this.setState({
+      token
+    });
   }
 
-  getToken(token) {
-    return localStorage.getItem('token');
+  getToken() {
+    return this.state.token;
   }
 
   logout() {
@@ -63,8 +67,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header username={this.state.username}/>
-        <Main login={() => {this.login()}}/>
-
+        <Main login={(username, password) => {this.login(username, password)}} getToken={this.getToken}/>
       </div>
     );
   }

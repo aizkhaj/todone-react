@@ -16,7 +16,7 @@ class Main extends Component {
           <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route path="/signin" render={props => <Login login={this.props.login}/>}/>   
-            <Route path="/lists" component={List}/>
+            <Route path="/lists" render={props => <List {...this.props}/>}/>
             <Route path="/task-history" component={TaskHistory}/>
             <Route path="/register" component={Register}/>
           </Switch>
