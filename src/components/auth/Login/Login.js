@@ -19,12 +19,10 @@ class Login extends Component {
     this.setState({
       [name]: value
     });
-    console.log(this.state);
   }
 
   handleSubmit(e) {
     e.preventDefault();
-    console.log("Check to see if state has been set with user login: ", this.state.username, this.state.password);
     this.props.login(this.state.username, this.state.password);
   }
 

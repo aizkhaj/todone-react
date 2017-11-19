@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Navbar, Nav, NavItem, Button } from 'react-bootstrap';
-import {Link, NavLink} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import "../Header/Header.css";
+import { LinkContainer } from 'react-router-bootstrap';
 
 class Header extends Component {
   render() {
@@ -15,22 +16,24 @@ class Header extends Component {
         </Navbar.Header>
         <Navbar.Collapse>
           <Nav>
-            <NavItem>
-              <NavLink className="" to="/lists">My Lists</NavLink>
-            </NavItem>
+            <LinkContainer to="/lists">
+              <NavItem>
+                My Lists
+              </NavItem>
+            </LinkContainer>
           </Nav>
           
           <Nav pullRight>
             <NavItem>
               {this.props.username}
             </NavItem>  
-            <NavItem>
-              <NavLink className="login-text" to="/signin">
-                <Button bsStyle="primary" bsSize="xs">
-                  Sign In
-                </Button>
-              </NavLink>
-            </NavItem>
+            <LinkContainer to="/signin">
+              <NavItem>
+                  <Button bsStyle="primary" bsSize="xs">
+                    Sign In
+                  </Button>
+              </NavItem>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Navbar>

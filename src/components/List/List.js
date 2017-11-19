@@ -10,6 +10,7 @@ class List extends Component {
     super(props)
 
     this.state = {
+      title: '',
       items: [
         {
           title: 'Walk the cat',
@@ -44,13 +45,31 @@ class List extends Component {
     this.setState({ newItemTitle: e.target.value });
   }
 
+  componentDidMount() {
+    fetch(`${process.env.REACT_APP_BASE_URL}/lists`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "jwt " + localStorage.getItem('token')
+      }
+    })
+    .then(response => response.json())
+    .then((response) => {
+      console.log('response', response);
+      let title = response.map((list) => list.title);
+      
+      this.setState({title});
+    })
+    .catch((err) => {console.log('Failed!', err)});
+  }
+
   render() {
     return (
       <div className="list">
         <Col md={2} />
         <Col md={8}>
           <Link id="task-history" to="/task-history">Task History</Link>
-          <Panel collapsible defaultExpanded header="List Name Here">
+          <Panel collapsible defaultExpanded header={this.state.title}>
             <ListGroup fill>
               {this.state.items.map((item, index) => (
                 <Item

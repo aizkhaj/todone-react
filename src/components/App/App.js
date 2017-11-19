@@ -18,7 +18,6 @@ class App extends Component {
   }
 
   login(username, password) {
-    console.log(username, password);
     fetch(`${process.env.REACT_APP_BASE_URL}/login`, {
       method: 'POST',
       headers: {
