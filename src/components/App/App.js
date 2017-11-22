@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       username: '',
       token: localStorage.getItem('token') || '',
-      lists: []
+      
     }
   }
 

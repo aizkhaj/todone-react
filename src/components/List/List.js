@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Item from '../Item/Item';
 import { Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup, Col } from 'react-bootstrap';
 import '../List/List.css';
-import NewList from '../NewList/NewList';
 
 class List extends Component {
   constructor(props) {
@@ -45,31 +44,11 @@ class List extends Component {
     this.setState({ newItemTitle: e.target.value });
   }
 
-  componentDidMount() {
-    fetch(`${process.env.REACT_APP_BASE_URL}/lists`, {
-      method: 'GET',
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "jwt " + localStorage.getItem('token')
-      }
-    })
-    .then(response => response.json())
-    .then((response) => {
-      console.log('response', response);
-      let title = response.map((list) => list.title);
-      
-      this.setState({title});
-    })
-    .catch((err) => {console.log('Failed!', err)});
-  }
-
   render() {
     return (
       <div className="list">
-        <Col md={2} />
-        <Col md={8}>
-          <Link id="task-history" to="/task-history">Task History</Link>
-          <Panel collapsible defaultExpanded header={this.state.title}>
+        
+          <Panel collapsible defaultExpanded header={this.props.title}>
             <ListGroup fill>
               {this.state.items.map((item, index) => (
                 <Item
@@ -92,10 +71,8 @@ class List extends Component {
               </FormGroup>
             </Form>
           </Panel>
-          <NewList />
-        </Col>
-        <Col md={2} />
-        <Route exact path="/lists" />
+        
+        <Route exact path="/list" />
       </div>
     )
   }
