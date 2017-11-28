@@ -39,6 +39,7 @@ class Lists extends Component {
             <List
               key={index}
               title={list.title}
+              id={list._id}
             />
           ))}
           <NewList />

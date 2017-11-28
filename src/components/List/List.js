@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import Item from '../Item/Item';
-import { Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup, Col } from 'react-bootstrap';
+import { Form, Button, FormGroup, FormControl, ListGroup, Panel, InputGroup } from 'react-bootstrap';
 import '../List/List.css';
 
 class List extends Component {
@@ -10,16 +10,7 @@ class List extends Component {
 
     this.state = {
       title: '',
-      items: [
-        {
-          title: 'Walk the cat',
-          completed: false
-        },
-        {
-          title: "Find a cat",
-          completed: true
-        }
-      ],
+      items: [],
       newItemTitle: ''
     };
   }
@@ -44,34 +35,51 @@ class List extends Component {
     this.setState({ newItemTitle: e.target.value });
   }
 
+  componentDidMount() {
+    var url = `${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items`;
+    console.log(url);
+    fetch(`${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items`, {
+      method: 'GET',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "jwt " + localStorage.getItem('token')
+      }
+    })
+      .then(response => response.json())
+      .then((response) => {
+        console.log('response: ', response);
+        let items = response.map(items => items);
+        this.setState({ items });
+      })
+      .catch((err) => { console.log('Failed!', err) });
+  }
+
   render() {
     return (
       <div className="list">
-        
-          <Panel collapsible defaultExpanded header={this.props.title}>
-            <ListGroup fill>
-              {this.state.items.map((item, index) => (
-                <Item
-                  key={index}
-                  title={item.title}
-                  completed={item.completed}
-                  toggleComplete={() => {
-                    this.toggleComplete(index);
-                  }} />
-              ))}
-            </ListGroup>
-            <Form onSubmit={(e) => this.handleSubmit(e)}>
-              <FormGroup controlId="newItem">
-                <InputGroup>
-                  <FormControl className="newItem" type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
-                  <InputGroup.Button>
-                    <Button type="submit">Submit</Button>
-                  </InputGroup.Button>
-                </InputGroup>
-              </FormGroup>
-            </Form>
-          </Panel>
-        
+        <Panel collapsible defaultExpanded header={this.props.title}>
+          <ListGroup fill>
+            {this.state.items.map((item, index) => (
+              <Item
+                key={index}
+                title={item.title}
+                completed={item.completed}
+                toggleComplete={() => {
+                  this.toggleComplete(index);
+                }} />
+            ))}
+          </ListGroup>
+          <Form onSubmit={(e) => this.handleSubmit(e)}>
+            <FormGroup controlId="newItem">
+              <InputGroup>
+                <FormControl className="newItem" type="text" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} placeholder="Enter a task" />
+                <InputGroup.Button>
+                  <Button type="submit">Submit</Button>
+                </InputGroup.Button>
+              </InputGroup>
+            </FormGroup>
+          </Form>
+        </Panel>
         <Route exact path="/list" />
       </div>
     )
