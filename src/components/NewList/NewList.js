@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form, FormGroup, InputGroup, Button, FormControl} from 'react-bootstrap';
-// import List from '../List/List';
+
 
 class NewList extends Component {
   render() {

@@ -9,7 +9,6 @@ class List extends Component {
     super(props)
 
     this.state = {
-      title: '',
       items: [],
       newItemTitle: ''
     };
@@ -62,7 +61,7 @@ class List extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response: ', response);
+        console.log('response for getting items: ', response);
         let items = response.map(items => items);
         this.setState({ items });
       })
