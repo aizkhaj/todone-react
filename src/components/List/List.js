@@ -28,7 +28,24 @@ class List extends Component {
       return
     }
     const newItem = { title: this.state.newItemTitle, completed: false };
-    this.setState({ items: [...this.state.items, newItem], newItemTitle: '' });
+
+    fetch(`${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items/new`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "jwt " + localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        title: this.state.newItemTitle,
+        completed: false
+      })
+    })
+      .then(response => response.json())
+      .then((response) => {
+        console.log('response: ', response.message);
+        this.setState({ items: [...this.state.items, newItem], newItemTitle: '' });
+      })
+      .catch((err) => { console.log('Failed!', err) });
   }
 
   handleChange(e) {
