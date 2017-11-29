@@ -36,8 +36,6 @@ class List extends Component {
   }
 
   componentDidMount() {
-    var url = `${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items`;
-    console.log(url);
     fetch(`${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items`, {
       method: 'GET',
       headers: {
