@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import List from '../List/List';
-// import NewList from '../NewList/NewList';
 import { Col, Form, FormGroup, InputGroup, Button, FormControl } from 'react-bootstrap';
 
 class Lists extends Component {
@@ -19,7 +18,7 @@ class Lists extends Component {
     if (!this.state.newListTitle) {
       return
     }
-    const newList = { title: this.state.newListTitle };
+    const newList = { title: this.state.newListTitle, items: [] };
 
     fetch(`${process.env.REACT_APP_BASE_URL}/lists/new`, {
       method: 'POST',
@@ -36,6 +35,8 @@ class Lists extends Component {
       .then(response => response.json())
       .then((response) => {
         console.log('response: ', response.message);
+        newList._id = response.list_id;
+        console.log('newList: ', newList);
         this.setState({ lists: [...this.state.lists, newList], newListTitle: '' });
       })
       .catch((err) => { console.log('Failed!', err) });
@@ -55,7 +56,7 @@ class Lists extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response: ', response);
+        console.log('response from Lists: ', response);
         let lists = response.map(lists => lists);
         this.setState({ lists });
       })
@@ -77,7 +78,7 @@ class Lists extends Component {
           <Form onSubmit={(e) => this.handleSubmit(e)}>
             <FormGroup controlId="newList">
               <InputGroup>
-                <FormControl className="newList" type="text" placeholder="Name your new List" value={this.state.newItemTitle} onChange={(e) => this.handleChange(e)} />
+                <FormControl className="newList" type="text" placeholder="Name your new List" value={this.state.newListTitle} onChange={(e) => this.handleChange(e)} />
                 <InputGroup.Button>
                   <Button type="submit">Create List</Button>
                 </InputGroup.Button>

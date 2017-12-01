@@ -9,7 +9,7 @@ class Item extends Component {
         <Form>
           <FormGroup>
               {this.props.title}
-              <input className="itemCheckbox" type="checkbox" checked={this.props.completed} onChange={this.props.toggleComplete}/>
+              <input className="itemCheckbox" type="checkbox" checked={this.props.complete} onChange={this.props.toggleComplete}/>
           </FormGroup>
         </Form>
       </ListGroupItem>

@@ -17,8 +17,26 @@ class List extends Component {
   toggleComplete(index) {
     const items = this.state.items.slice();
     const item = items[index];
-    item.completed = item.completed ? false : true;
-    this.setState({ items: items });
+    item.complete = item.complete ? false : true;
+
+    fetch(`${process.env.REACT_APP_BASE_URL}/items/${item._id}/update`, {
+      method: 'PATCH',
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "jwt " + localStorage.getItem('token')
+      },
+      body: JSON.stringify({
+        list_id: this.props.id,
+        complete: item.complete
+      })
+    })
+      .then(response => response.json())
+      .then((response) => {
+        console.log('response of item update: ', response.message);
+        this.setState({ items });
+      })
+      .catch((err) => { console.log('Failed!', err) });
+    
   }
 
   handleSubmit(e) {
@@ -26,7 +44,7 @@ class List extends Component {
     if (!this.state.newItemTitle) {
       return
     }
-    const newItem = { title: this.state.newItemTitle, completed: false };
+    const newItem = { title: this.state.newItemTitle, complete: false };
 
     fetch(`${process.env.REACT_APP_BASE_URL}/lists/${this.props.id}/items/new`, {
       method: 'POST',
@@ -36,7 +54,7 @@ class List extends Component {
       },
       body: JSON.stringify({
         title: this.state.newItemTitle,
-        completed: false
+        complete: false
       })
     })
       .then(response => response.json())
@@ -77,7 +95,7 @@ class List extends Component {
               <Item
                 key={index}
                 title={item.title}
-                completed={item.completed}
+                complete={item.complete}
                 toggleComplete={() => {
                   this.toggleComplete(index);
                 }} />
