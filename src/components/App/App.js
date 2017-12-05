@@ -30,7 +30,7 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((response) => {
-      console.log('response', response);
+      console.log('login response: ', response);
       this.setState({username});
       this.setToken(response.token);
       this.props.history.push('/lists');
@@ -38,8 +38,27 @@ class App extends Component {
     .catch((err) => {console.log('Failed!', err)});
   }
 
+  newUser(username, password) {
+    fetch(`${process.env.REACT_APP_BASE_URL}/user/new`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    })
+      .then(response => response.json())
+      .then((response) => {
+        console.log('register new user response: ', response.message);
+        this.props.history.push('/signin');
+      })
+      .catch((err) => { console.log('Failed!', err) });
+  }
+
   checkLoggedIn() {
-    const token = this.getToken();
+    const token = this.state.token;
     if (!token) {
       return false;
     } else {
@@ -66,7 +85,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header username={this.state.username}/>
-        <Main login={(username, password) => {this.login(username, password)}} getToken={this.getToken}/>
+        <Main login={(username, password) => {this.login(username, password)}} getToken={this.getToken} newUser={(username, password) => {this.newUser(username, password)}}/>
       </div>
     );
   }
