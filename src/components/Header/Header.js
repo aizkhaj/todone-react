@@ -4,8 +4,51 @@ import {Link} from 'react-router-dom';
 import "../Header/Header.css";
 import { LinkContainer } from 'react-router-bootstrap';
 
+
+
+function LoginButton(props) {
+  return (
+    <LinkContainer to="/signin">
+      <NavItem>
+        <Button bsStyle="primary" bsSize="xs">
+          Login
+        </Button>
+      </NavItem>
+    </LinkContainer>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <LinkContainer to="/">
+      <NavItem>
+        <Button bsStyle="primary" bsSize="xs" onClick={props.onClick}>
+          Logout
+        </Button>
+      </NavItem>
+    </LinkContainer>
+  );
+}
+
 class Header extends Component {
+  constructor(props) {
+    super(props);
+  }
+
+  handleLogoutClick(e) {
+    this.props.logout();
+  }
+
   render() {
+    const isLoggedIn = this.props.isLoggedIn;
+    let button = null;
+
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={(e) => this.handleLogoutClick(e)} />;
+    } else {
+      button = <LoginButton/>;
+    }
+
     return (
       <Navbar inverse collapseOnSelect>
         <Navbar.Header>
@@ -27,13 +70,7 @@ class Header extends Component {
             <NavItem>
               {this.props.username}
             </NavItem>  
-            <LinkContainer to="/signin">
-              <NavItem>
-                  <Button bsStyle="primary" bsSize="xs">
-                    Sign In
-                  </Button>
-              </NavItem>
-            </LinkContainer>
+            {button}
           </Nav>
         </Navbar.Collapse>
       </Navbar>

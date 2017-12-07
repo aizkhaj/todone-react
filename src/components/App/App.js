@@ -13,7 +13,7 @@ class App extends Component {
     this.state = {
       username: '',
       token: localStorage.getItem('token') || '',
-      
+      isLoggedIn: false
     }
   }
 
@@ -31,9 +31,12 @@ class App extends Component {
     .then(response => response.json())
     .then((response) => {
       console.log('login response: ', response);
+      console.log("is user logged in?", this.state.isLoggedIn)
       this.setState({username});
       this.setToken(response.token);
+      this.setState({isLoggedIn: true});
       this.props.history.push('/lists');
+      console.log("is user logged in now?", this.state.isLoggedIn)
     })
     .catch((err) => {console.log('Failed!', err)});
   }
@@ -57,15 +60,6 @@ class App extends Component {
       .catch((err) => { console.log('Failed!', err) });
   }
 
-  checkLoggedIn() {
-    const token = this.state.token;
-    if (!token) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   setToken(token) {
     localStorage.setItem('token', token);
     this.setState({
@@ -79,13 +73,15 @@ class App extends Component {
 
   logout() {
     localStorage.removeItem('token');
+    this.setState({username: '', token: '', isLoggedIn: false});
+    console.log("Is user still logged in?", this.state.isLoggedIn);
   }
 
   render() {
     return (
       <div className="App">
-        <Header username={this.state.username}/>
-        <Main login={(username, password) => {this.login(username, password)}} getToken={this.getToken} newUser={(username, password) => {this.newUser(username, password)}}/>
+        <Header username={this.state.username} logout={() => {this.logout()}} isLoggedIn={this.state.isLoggedIn}/>
+        <Main login={(username, password) => {this.login(username, password)}} logout={() => {this.logout()}} getToken={this.getToken} newUser={(username, password) => {this.newUser(username, password)}}/>
       </div>
     );
   }
