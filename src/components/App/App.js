@@ -80,7 +80,7 @@ class App extends Component {
     return (
       <div className="App">
         <Header username={this.state.username} logout={() => {this.logout()}} isLoggedIn={this.state.isLoggedIn}/>
-        <Main login={(username, password) => {this.login(username, password)}} logout={() => {this.logout()}} getToken={this.getToken} newUser={(username, password) => {this.newUser(username, password)}}/>
+        <Main login={(username, password) => {this.login(username, password)}} newUser={(username, password) => {this.newUser(username, password)}} isLoggedIn={this.state.isLoggedIn}/>
       </div>
     );
   }

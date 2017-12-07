@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import {Grid} from 'react-bootstrap';
 import Lists from '../Lists/Lists';
 import HomePage from '../HomePage/HomePage';
@@ -10,13 +10,28 @@ import './Main.css';
 
 class Main extends Component {
   render() {
+    const isLoggedIn = this.props.isLoggedIn;
+    
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={props => (
+        (isLoggedIn) ? (
+          <Lists {...this.props}/>
+        ) : (
+          <Redirect to={{
+            pathname: '/signin',
+            // state: { from: props.location }
+          }}/>
+        )
+      )}/>
+    );
+    
     return (
       <main>
         <Grid>
           <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route path="/signin" render={props => <Login {...this.props}/>}/>   
-            <Route path="/lists" render={props => <Lists {...this.props}/>}/>
+            <PrivateRoute/>
             <Route path="/task-history" component={TaskHistory}/>
             <Route path="/register" render={props => <Register {...this.props}/>}/>
           </Switch>
