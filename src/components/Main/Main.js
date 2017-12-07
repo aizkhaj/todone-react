@@ -19,7 +19,6 @@ class Main extends Component {
         ) : (
           <Redirect to={{
             pathname: '/signin',
-            // state: { from: props.location }
           }}/>
         )
       )}/>
