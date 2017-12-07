@@ -31,10 +31,6 @@ function LogoutButton(props) {
 }
 
 class Header extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleLogoutClick(e) {
     this.props.logout();
   }

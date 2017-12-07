@@ -74,7 +74,6 @@ class App extends Component {
   logout() {
     localStorage.removeItem('token');
     this.setState({username: '', token: '', isLoggedIn: false});
-    console.log("Is user still logged in?", this.state.isLoggedIn);
   }
 
   render() {
