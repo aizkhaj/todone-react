@@ -32,7 +32,6 @@ class List extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response of item update: ', response.message);
         this.setState({ items });
       })
       .catch((err) => { console.log('Failed!', err) });
@@ -59,7 +58,6 @@ class List extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response: ', response.message);
         this.setState({ items: [...this.state.items, newItem], newItemTitle: '' });
       })
       .catch((err) => { console.log('Failed!', err) });
@@ -79,7 +77,6 @@ class List extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response for getting items: ', response);
         let items = response.map(items => items);
         this.setState({ items });
       })

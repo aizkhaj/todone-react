@@ -34,9 +34,7 @@ class Lists extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response: ', response.message);
         newList._id = response.list_id;
-        console.log('newList: ', newList);
         this.setState({ lists: [...this.state.lists, newList], newListTitle: '' });
       })
       .catch((err) => { console.log('Failed!', err) });
@@ -56,7 +54,6 @@ class Lists extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('response from Lists: ', response);
         let lists = response.map(lists => lists);
         this.setState({ lists });
       })

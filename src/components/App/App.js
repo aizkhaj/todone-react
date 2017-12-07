@@ -30,13 +30,10 @@ class App extends Component {
     })
     .then(response => response.json())
     .then((response) => {
-      console.log('login response: ', response);
-      console.log("is user logged in?", this.state.isLoggedIn)
       this.setState({username});
       this.setToken(response.token);
       this.setState({isLoggedIn: true});
       this.props.history.push('/lists');
-      console.log("is user logged in now?", this.state.isLoggedIn)
     })
     .catch((err) => {console.log('Failed!', err)});
   }
@@ -54,7 +51,6 @@ class App extends Component {
     })
       .then(response => response.json())
       .then((response) => {
-        console.log('register new user response: ', response.message);
         this.props.history.push('/signin');
       })
       .catch((err) => { console.log('Failed!', err) });
