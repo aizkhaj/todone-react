@@ -12,17 +12,13 @@ class Main extends Component {
   render() {
     const isLoggedIn = this.props.isLoggedIn;
     
-    const PrivateRoute = ({ component: Component, ...rest }) => (
-      <Route {...rest} render={props => (
-        (isLoggedIn) ? (
-          <Lists {...this.props}/>
-        ) : (
-          <Redirect to={{
-            pathname: '/signin',
-          }}/>
-        )
-      )}/>
-    );
+    // const PrivateRoute = ({ component: Component, ...rest }) => (
+    //   <Route {...rest} render={props => (
+    //     isLoggedIn 
+    //     ? <Lists {...this.props}/>
+    //     : <Redirect to="/signin"/>
+    //   )}/>
+    // );
     
     return (
       <main>
@@ -30,7 +26,12 @@ class Main extends Component {
           <Switch>
             <Route exact path="/" component={HomePage}/>
             <Route path="/signin" render={props => <Login {...this.props}/>}/>   
-            <PrivateRoute/>
+            {/* <PrivateRoute/> */}
+            <Route path="/lists" render={() => (
+              isLoggedIn
+              ? <Lists {...this.props}/>
+              : <Redirect to="/signin"/>
+            )} />
             <Route path="/task-history" component={TaskHistory}/>
             <Route path="/register" render={props => <Register {...this.props}/>}/>
           </Switch>
